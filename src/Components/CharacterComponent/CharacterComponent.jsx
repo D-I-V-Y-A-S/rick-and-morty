@@ -4,6 +4,8 @@ import './CharacterComponent.css'
 const CharacterComponent = () => {
     const [data, setData] = useState([])
 
+    //access every character from the api so array use pandrom.
+
     const getCharacter = async () => {
         const response = await axios.get(`https://rickandmortyapi.com/api/character`)
         console.log(response.data.results)
@@ -13,24 +15,31 @@ const CharacterComponent = () => {
     useEffect(() => {
         getCharacter();
     }, [])
+    
+    //,[]-only one time tha render aagum.
 
     return (
         <React.Fragment>
             <h1 className="title-part"><b>Rick and Morty</b></h1>
-            <div className="positioning">
-            {data.slice(0, 20).map(iterator => (
-               
+
+            <div className="layout">
+            {data.map(iterator => (
+                            
             <div className="align-items" key={iterator.id}>
-            <img src={iterator.image} alt="image-of-characters" height="200px"/>
+            <img src={iterator.image} alt="image-of-characters" height="200px" style={{borderTopLeftRadius:"20px",borderBottomLeftRadius:"20px"}} />
+
             <div className="details">
-                <div>
+
+            <div>
             <h1>{iterator.name}</h1>
             <h3>{iterator.status}-{iterator.species}</h3>
             </div>
+
             <div>
             <p style={{color:'gray'}}>Last seen on</p>
-            <h5>{iterator.location.name}</h5>
+            <p><b>{iterator.location.name}</b></p>
             </div>
+
             </div>
             </div>
           

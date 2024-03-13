@@ -1,21 +1,28 @@
 .title-part
 {
     text-align: center;
-    padding:2%;
+    padding:1%;
     margin-left:0px;
     font-size:60px;
 }
+
+.layout
+{
+    margin-left: 10%;
+    width:80%;
+    display:flex;
+    flex-wrap: wrap;
+}
+
 .align-items
 {
 display: flex;
-background-color: rgb(55, 53, 53);
-width:40%;
-height:10%;
-flex-direction:row;
 flex-wrap: wrap;
+background-color: rgb(55, 53, 53);
+width:48%;
 border:2px solid rgb(55, 53, 53);
 border-radius: 20px;
-margin: 10px;
+margin:10px;
 }
 
 .details
@@ -25,13 +32,4 @@ margin: 10px;
     flex-direction: column;
     flex-wrap: wrap;
     line-height: 10px;
-}
-
-.positioning
-{
-    display: flex;
-    /* justify-content: space-between; */
-    flex-wrap: wrap;
-    margin-left: 14%;
-    
 }
