@@ -1,46 +1,30 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import './CharacterComponent.css'
+import './ReactQueryComponent.css'
 import CharacterComponentSingular from '../CharacterComponentSingular/CharacterComponentSingular'
 import { useQuery } from 'react-query'
-const CharacterComponent = () => {
-    // const [data, setData] = useState([])
+const ReactQueryComponent = () => {
     const [pageNumber, setPageNumber] = useState(1)
 
-    const getCharacter = async ({ queryKey }) => {
-        const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${queryKey[1]}`)
-        //queryKey-cache work aaga
-        // console.log(response.data)
-        // setData(response.data)
-        console.log(queryKey);
+    const getCharacter = async () => {
+        const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${pageNumber}`)
         return response.data
     }
 
-    // useEffect(() => {
-    //     getCharacter();
-    // }, [pageNumber])
-    //if ,[] the useEffect will render only once in the beginning.
-
-    const { data, status, isPreviousData, isLoading, isError } = useQuery(['characters', pageNumber], getCharacter,
-        {
-            KeepPreviousData: true
-        })
+    const { data, status } = useQuery(['characters', pageNumber], getCharacter,)
 
     //data-axios data ; status-loading
 
-    //    if(status==='loading')
-    if (isLoading) {
+    if (status === 'loading') {
         return <div>loading...</div>
     }
 
-    //    if(status==='error')
-    if (isError) {
+    if (status === 'error') {
         return <div>error...</div>
     }
 
     const renderPreviousPage = () => {
         setPageNumber((Number) => Number - 1)
-
     }
     const renderNextPage = () => {
         setPageNumber((Number) => Number + 1)
@@ -67,7 +51,7 @@ const CharacterComponent = () => {
                 </button>
                 <button
                     className="btn"
-                    disabled={isPreviousData || !data.info.next}
+                    disabled={!data.info.next}
                     onClick={renderNextPage}>
                     Next
                 </button>
@@ -75,7 +59,6 @@ const CharacterComponent = () => {
         </React.Fragment>
     )
 }
-export default CharacterComponent
 
-
+export default ReactQueryComponent
 //if want to visit last page setstate to 42.

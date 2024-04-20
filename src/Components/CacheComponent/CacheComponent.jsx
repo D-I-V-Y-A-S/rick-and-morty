@@ -1,39 +1,30 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import './CharacterComponent.css'
+import './CacheComponent.css'
 import CharacterComponentSingular from '../CharacterComponentSingular/CharacterComponentSingular'
 import { useQuery } from 'react-query'
-const CharacterComponent = () => {
-    // const [data, setData] = useState([])
+const CacheComponent = () => {
     const [pageNumber, setPageNumber] = useState(1)
 
     const getCharacter = async ({ queryKey }) => {
         const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${queryKey[1]}`)
-        //queryKey-cache work aaga
-        // console.log(response.data)
-        // setData(response.data)
+        //queryKey-to make cache works.[1]represents the pagenumber as [0] is characters.
         console.log(queryKey);
         return response.data
     }
-
-    // useEffect(() => {
-    //     getCharacter();
-    // }, [pageNumber])
-    //if ,[] the useEffect will render only once in the beginning.
 
     const { data, status, isPreviousData, isLoading, isError } = useQuery(['characters', pageNumber], getCharacter,
         {
             KeepPreviousData: true
         })
 
-    //data-axios data ; status-loading
+    //data-axios data ; status-loading,error
+    // KeepPreviousData keep previous data until the rendering of next data.
 
-    //    if(status==='loading')
     if (isLoading) {
         return <div>loading...</div>
     }
 
-    //    if(status==='error')
     if (isError) {
         return <div>error...</div>
     }
@@ -75,7 +66,5 @@ const CharacterComponent = () => {
         </React.Fragment>
     )
 }
-export default CharacterComponent
 
-
-//if want to visit last page setstate to 42.
+export default CacheComponent
